@@ -746,6 +746,23 @@
   color: var(--ink);
 }
 
+.preview__switch {
+  display: block;
+  width: 100%;
+  padding: 7px 14px;
+  border-top: 1px solid rgba(233, 227, 214, 0.06);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  color: var(--ink-faint);
+  transition: color 0.2s;
+}
+
+.preview__switch:hover {
+  color: var(--accent);
+}
+
 .preview__foot {
   display: flex;
   justify-content: space-between;

@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
 import TrackPlayer from './TrackPlayer'
+import { prefersYandex, setPrefersYandex } from '../lib/playerChoice'
 
 /** Длина отрывка. Без подписки сервисы и сами отдают только 30 секунд. */
 const EXCERPT_MS = 30000
@@ -43,13 +44,19 @@ const TrackPreview = forwardRef(function TrackPreview(
   const [place, setPlace] = useState(null)
   const [ended, setEnded] = useState(false)
   const [run, setRun] = useState(0)
+  // Запасной плеер Яндекса: выбор запоминается, чтобы там, где Spotify не играет,
+  // не переключать каждый трек заново.
+  const [useYandex, setUseYandex] = useState(prefersYandex)
+
+  const fallback = track.source.yandex ? { provider: 'yandex', ...track.source.yandex } : null
+  const source = useYandex && fallback ? fallback : track.source
 
   useImperativeHandle(ref, () => rootRef.current)
 
   useLayoutEffect(() => {
     const { offsetWidth, offsetHeight } = rootRef.current
     setPlace(placeBeside(anchor, offsetWidth, offsetHeight))
-  }, [anchor])
+  }, [anchor, source.provider])
 
   useEffect(() => () => clearTimeout(timer.current), [])
 
@@ -65,7 +72,15 @@ const TrackPreview = forwardRef(function TrackPreview(
     setRun((value) => value + 1)
   }
 
-  const { provider } = track.source
+  const switchPlayer = () => {
+    const next = !useYandex
+    setUseYandex(next)
+    setPrefersYandex(next)
+    setEnded(false)
+    clearTimeout(timer.current)
+  }
+
+  const { provider } = source
   const service = SERVICE[provider]
   const albumLine = [track.album, track.year].filter(Boolean).join(' · ')
 
@@ -109,8 +124,9 @@ const TrackPreview = forwardRef(function TrackPreview(
           </button>
         ) : (
           <TrackPlayer
-            key={`${soundAllowed}:${run}`}
+            key={`${provider}:${soundAllowed}:${run}`}
             track={track}
+            source={source}
             autoplay={soundAllowed}
             onReady={startCountdown}
             onEnded={() => setEnded(true)}
@@ -118,9 +134,15 @@ const TrackPreview = forwardRef(function TrackPreview(
         )}
       </div>
 
+      {fallback && (
+        <button type="button" className="preview__switch" onClick={switchPlayer}>
+          {useYandex ? 'Вернуть плеер Spotify' : 'Не играет? Включить через Яндекс Музыку'}
+        </button>
+      )}
+
       <footer className="preview__foot">
         <span>{soundAllowed ? 'Отрывок · до 30 секунд' : 'Кликните, чтобы включить звук'}</span>
-        <a href={service.link(track.source)} target="_blank" rel="noreferrer">
+        <a href={service.link(source)} target="_blank" rel="noreferrer">
           Целиком в {service.label} ↗
         </a>
       </footer>

@@ -13,11 +13,12 @@
  * Обложка альбома лежит в public/covers, поэтому показывается и без интернета.
  *
  * Источник звука у композиции:
- *   { provider: 'yandex', trackId, albumId } — виджет Яндекс Музыки
- *     (ID из ссылки music.yandex.ru/album/<albumId>/track/<trackId>)
- *   { provider: 'spotify', trackId }         — плеер Spotify
- *     (ID из ссылки open.spotify.com/track/<trackId>). Им закрыты два трека
- *     Pink Floyd: студийных альбомов группы на Яндекс Музыке нет.
+ *   { provider: 'spotify', trackId, yandex? } — плеер Spotify, основной: на телефонах он грузится
+ *     заметно быстрее виджета Яндекса. ID из ссылки open.spotify.com/track/<trackId>.
+ *     yandex: { trackId, albumId } — запасной плеер, если Spotify не играет
+ *     (например, там, где Spotify недоступен). В окошке трека есть кнопка переключения.
+ *   { provider: 'yandex', trackId, albumId }  — только виджет Яндекс Музыки, для треков,
+ *     которых нет в Spotify. ID из ссылки music.yandex.ru/album/<albumId>/track/<trackId>.
  */
 
 import coverDarMonolita from '../assets/covers/dar-monolita.webp'
@@ -30,52 +31,52 @@ function track(title, artist, album, year, cover, source) {
 }
 
 const lunTracks = [
-  track('Silence Single Edit', 'Delerium, Sarah McLachlan', 'The Best Of', 2004, '/covers/yandex-3954214.png', { provider: 'yandex', trackId: '3954214', albumId: '445062' }),
-  track('Can You Hear the Rain', 'Unto Others', "Don't Waste Your Time", 2018, '/covers/yandex-43629001.jpg', { provider: 'yandex', trackId: '43629001', albumId: '5811794' }),
+  track('Silence Single Edit', 'Delerium, Sarah McLachlan', 'The Best Of', 2004, '/covers/yandex-3954214.png', { provider: 'spotify', trackId: '2F25E5hmp6OOMUkIQdEv4d', yandex: { trackId: '3954214', albumId: '445062' } }),
+  track('Can You Hear the Rain', 'Unto Others', "Don't Waste Your Time", 2018, '/covers/yandex-43629001.jpg', { provider: 'spotify', trackId: '47rx6h9vdRMKgkngJRBkMa', yandex: { trackId: '43629001', albumId: '5811794' } }),
   track('Keep Talking 2011 - Remaster', 'Pink Floyd', 'The Division Bell (2011 Remastered)', 1994, '/covers/spotify-5q45u6NsnW3EiNnpjBmwOC.jpg', { provider: 'spotify', trackId: '5q45u6NsnW3EiNnpjBmwOC' }),
-  track('Тынларсынмы Яшьлек Хислэремне', 'Ильхам Шакиров', 'Мэнге Кунелдэ', 2020, '/covers/yandex-71088638.jpg', { provider: 'yandex', trackId: '71088638', albumId: '12073582' }),
-  track('Голубая стрела', 'Зоя Ященко, Белая Гвардия', 'Так восходит луна', 2014, '/covers/yandex-30009183.jpg', { provider: 'yandex', trackId: '30009183', albumId: '3619671' }),
-  track('Рожденные жить', 'Сергей Маврин', 'Запрещённая реальность', 2004, '/covers/yandex-1704887.jpg', { provider: 'yandex', trackId: '1704887', albumId: '168957' }),
-  track('Дождь и я', 'Алиса', 'Ъ', 2010, '/covers/yandex-18079554.jpg', { provider: 'yandex', trackId: '18079554', albumId: '2003177' }),
-  track('Горько', 'Алиса', 'Пульс хранителя дверей лабиринта', 2008, '/covers/yandex-1706330.jpg', { provider: 'yandex', trackId: '1706330', albumId: '168939' }),
-  track('Время', 'Ключевая', 'Юдоль', 2022, '/covers/yandex-108003533.jpg', { provider: 'yandex', trackId: '108003533', albumId: '23764030' }),
-  track('Воздух', 'Инкогнито', 'Воздух', 2018, '/covers/yandex-43136080.jpg', { provider: 'yandex', trackId: '43136080', albumId: '5729224' }),
-  track('Долго…', 'ДДТ', 'Долго…', 2024, '/covers/yandex-130300466.jpg', { provider: 'yandex', trackId: '130300466', albumId: '32949844' }),
-  track('Маковое поле', 'Рубеж Веков', 'Кухонный космос', 2024, '/covers/yandex-119841154.jpg', { provider: 'yandex', trackId: '119841154', albumId: '34012443' }),
+  track('Тынларсынмы Яшьлек Хислэремне', 'Ильхам Шакиров', 'Мэнге Кунелдэ', 2020, '/covers/yandex-71088638.jpg', { provider: 'spotify', trackId: '5EyolQyO2zZbB8qvW2A0hh', yandex: { trackId: '71088638', albumId: '12073582' } }),
+  track('Голубая стрела', 'Зоя Ященко, Белая Гвардия', 'Так восходит луна', 2014, '/covers/yandex-30009183.jpg', { provider: 'spotify', trackId: '5ioboqJd5PZ0N6viFlWzUU', yandex: { trackId: '30009183', albumId: '3619671' } }),
+  track('Рожденные жить', 'Сергей Маврин', 'Запрещённая реальность', 2004, '/covers/yandex-1704887.jpg', { provider: 'spotify', trackId: '3hxxfwzjm7Ygn3Dfsm0a3v', yandex: { trackId: '1704887', albumId: '168957' } }),
+  track('Дождь и я', 'Алиса', 'Ъ', 2010, '/covers/yandex-18079554.jpg', { provider: 'spotify', trackId: '1s7f6XItJbzo2fri2qNCqc', yandex: { trackId: '18079554', albumId: '2003177' } }),
+  track('Горько', 'Алиса', 'Пульс хранителя дверей лабиринта', 2008, '/covers/yandex-1706330.jpg', { provider: 'spotify', trackId: '2lZOlnHNaMIrKG58e7RH3N', yandex: { trackId: '1706330', albumId: '168939' } }),
+  track('Время', 'Ключевая', 'Юдоль', 2022, '/covers/yandex-108003533.jpg', { provider: 'spotify', trackId: '1MIulGS6hmb0Kp2bdFVwOw', yandex: { trackId: '108003533', albumId: '23764030' } }),
+  track('Воздух', 'Инкогнито', 'Воздух', 2018, '/covers/yandex-43136080.jpg', { provider: 'spotify', trackId: '6oyJcoDAgZ9hrSXzuGHXH8', yandex: { trackId: '43136080', albumId: '5729224' } }),
+  track('Долго…', 'ДДТ', 'Долго…', 2024, '/covers/yandex-130300466.jpg', { provider: 'spotify', trackId: '7xu4DkNUAW12jugYfz7qp9', yandex: { trackId: '130300466', albumId: '32949844' } }),
+  track('Маковое поле', 'Рубеж Веков', 'Кухонный космос', 2024, '/covers/yandex-119841154.jpg', { provider: 'spotify', trackId: '0QFQUpyOjychyKT8kECodG', yandex: { trackId: '119841154', albumId: '34012443' } }),
 ]
 
 const freonTracks = [
   track('Sorrow 2011 - Remaster', 'Pink Floyd', 'A Momentary Lapse Of Reason (2011 Remastered)', 1987, '/covers/spotify-2mETOGyRPsBSiIybp6SN7k.jpg', { provider: 'spotify', trackId: '2mETOGyRPsBSiIybp6SN7k' }),
-  track('Almost Loved', 'Moby, The Void Pacific Choir', 'Almost Loved', 2016, '/covers/yandex-25496696.jpg', { provider: 'yandex', trackId: '25496696', albumId: '3345642' }),
-  track('Woman', 'City and Colour', 'If I Should Go Before You', 2015, '/covers/yandex-24488841.jpg', { provider: 'yandex', trackId: '24488841', albumId: '3002757' }),
-  track('BURANBAY', 'HANQYZY', 'BURANBAY', 2026, '/covers/yandex-155455202.jpg', { provider: 'yandex', trackId: '155455202', albumId: '43825390' }),
-  track('Будь моей тенью', 'Сплин', 'Коллекционер оружия', 1996, '/covers/yandex-38844305.jpg', { provider: 'yandex', trackId: '38844305', albumId: '168867' }),
-  track('Viasna, dzie buvała', 'Hvarna', 'Koła Viartańniaŭ', 2016, '/covers/yandex-27068976.jpg', { provider: 'yandex', trackId: '27068976', albumId: '3232122' }),
-  track('2000 Elefanten', 'Die Wilde Jagd', 'Uhrwald Orange', 2018, '/covers/yandex-40966556.jpg', { provider: 'yandex', trackId: '40966556', albumId: '5342974' }),
-  track('988', 'Сруб', '988', 2019, '/covers/yandex-60483608.jpg', { provider: 'yandex', trackId: '60483608', albumId: '9348142' }),
-  track('Думать о делах', 'Оркестр не за горами', 'Всему своё бремя', 2020, '/covers/yandex-70962178.jpg', { provider: 'yandex', trackId: '70962178', albumId: '33596446' }),
-  track('Try Iskry', 'Gealdýr, Dzivia', 'Try Iskry', 2025, '/covers/yandex-141969767.jpg', { provider: 'yandex', trackId: '141969767', albumId: '37841989' }),
-  track('Wonderful Life Café Buddha Del Mar Bar Mix as made famous by Hurts', 'Kenny Fontana', 'Lounge of Love', 2011, '/covers/yandex-27488614.jpg', { provider: 'yandex', trackId: '27488614', albumId: '6185052' }),
-  track('Ne Naprasno', 'Soft Blade', 'Softic 2', 2025, '/covers/yandex-144017045.jpg', { provider: 'yandex', trackId: '144017045', albumId: '38660313' }),
-  track('SHAITAN', 'HANQYZY', 'SHAITAN', 2026, '/covers/yandex-148492272.jpg', { provider: 'yandex', trackId: '148492272', albumId: '40788090' }),
-  track('Ливни', 'Мимо Вселенной', 'Разрушительные сны', 2017, '/covers/yandex-36371016.jpg', { provider: 'yandex', trackId: '36371016', albumId: '3848227' }),
-  track('Сарман вальсы', 'Ришат Тухватуллин, Ильхам Шакиров', 'Сарман вальсы', 2021, '/covers/yandex-95976946.jpg', { provider: 'yandex', trackId: '95976946', albumId: '19618523' }),
+  track('Almost Loved', 'Moby, The Void Pacific Choir', 'Almost Loved', 2016, '/covers/yandex-25496696.jpg', { provider: 'spotify', trackId: '1CcEHM0VShuIfd9Jv1jicb', yandex: { trackId: '25496696', albumId: '3345642' } }),
+  track('Woman', 'City and Colour', 'If I Should Go Before You', 2015, '/covers/yandex-24488841.jpg', { provider: 'spotify', trackId: '09j4majo0vrKDsiGuR06dg', yandex: { trackId: '24488841', albumId: '3002757' } }),
+  track('BURANBAY', 'HANQYZY', 'BURANBAY', 2026, '/covers/yandex-155455202.jpg', { provider: 'spotify', trackId: '0GWVHpix9cMD7rExVVpJbS', yandex: { trackId: '155455202', albumId: '43825390' } }),
+  track('Будь моей тенью', 'Сплин', 'Коллекционер оружия', 1996, '/covers/yandex-38844305.jpg', { provider: 'spotify', trackId: '55LJzLMqf9wb9wwUHZ218a', yandex: { trackId: '38844305', albumId: '168867' } }),
+  track('Viasna, dzie buvała', 'Hvarna', 'Koła Viartańniaŭ', 2016, '/covers/yandex-27068976.jpg', { provider: 'spotify', trackId: '5mP39z1lnsfpeJe7bHkGnV', yandex: { trackId: '27068976', albumId: '3232122' } }),
+  track('2000 Elefanten', 'Die Wilde Jagd', 'Uhrwald Orange', 2018, '/covers/yandex-40966556.jpg', { provider: 'spotify', trackId: '2ufkztgsyPMB198a2jCP7F', yandex: { trackId: '40966556', albumId: '5342974' } }),
+  track('988', 'Сруб', '988', 2019, '/covers/yandex-60483608.jpg', { provider: 'spotify', trackId: '5MRG3Y92yHZ84S9Iejq31L', yandex: { trackId: '60483608', albumId: '9348142' } }),
+  track('Думать о делах', 'Оркестр не за горами', 'Всему своё бремя', 2020, '/covers/yandex-70962178.jpg', { provider: 'spotify', trackId: '6JyhfluzHCUq4CgynRgovY', yandex: { trackId: '70962178', albumId: '33596446' } }),
+  track('Try Iskry', 'Gealdýr, Dzivia', 'Try Iskry', 2025, '/covers/yandex-141969767.jpg', { provider: 'spotify', trackId: '1Q0vX1S64QeVqtRp0M1zVr', yandex: { trackId: '141969767', albumId: '37841989' } }),
+  track('Wonderful Life Café Buddha Del Mar Bar Mix as made famous by Hurts', 'Kenny Fontana', 'Lounge of Love', 2011, '/covers/yandex-27488614.jpg', { provider: 'spotify', trackId: '3qb9j8EswfyJ5t222zUIrU', yandex: { trackId: '27488614', albumId: '6185052' } }),
+  track('Ne Naprasno', 'Soft Blade', 'Softic 2', 2025, '/covers/yandex-144017045.jpg', { provider: 'spotify', trackId: '1dAzblc0emLDZDDYWXHi5a', yandex: { trackId: '144017045', albumId: '38660313' } }),
+  track('SHAITAN', 'HANQYZY', 'SHAITAN', 2026, '/covers/yandex-148492272.jpg', { provider: 'spotify', trackId: '7a82N90uN2ctpnoJVCGPBH', yandex: { trackId: '148492272', albumId: '40788090' } }),
+  track('Ливни', 'Мимо Вселенной', 'Разрушительные сны', 2017, '/covers/yandex-36371016.jpg', { provider: 'spotify', trackId: '0pXgnJUVVfQ18kojEoQba5', yandex: { trackId: '36371016', albumId: '3848227' } }),
+  track('Сарман вальсы', 'Ришат Тухватуллин, Ильхам Шакиров', 'Сарман вальсы', 2021, '/covers/yandex-95976946.jpg', { provider: 'spotify', trackId: '24c4fRHQEYZrFNbE2W6f94', yandex: { trackId: '95976946', albumId: '19618523' } }),
 ]
 
 const darMonolitaTracks = [
-  track('Silence', 'CDM Project', '50 Best of Chill & Lounge', null, '/covers/yandex-2236548.jpg', { provider: 'yandex', trackId: '2236548', albumId: '239306' }),
-  track("Here's To You", 'Hayley Westenra, Ennio Morricone, Roma Sinfonietta', 'Paradiso', 2011, '/covers/yandex-2524382.jpg', { provider: 'yandex', trackId: '2524382', albumId: '255196' }),
-  track('Река', 'Хмельная Ворга', 'Талые воды', 2024, '/covers/yandex-133956317.jpg', { provider: 'yandex', trackId: '133956317', albumId: '34421164' }),
-  track('Век-волкодав (За гремучую доблесть грядущих веков)', 'Noize MC', 'Сохрани мою речь навсегда', 2021, '/covers/yandex-76204162.jpg', { provider: 'yandex', trackId: '76204162', albumId: '13451951' }),
-  track('Плакун-трава', 'Хмельная Ворга', 'Талые воды', 2024, '/covers/yandex-133956326.jpg', { provider: 'yandex', trackId: '133956326', albumId: '34421164' }),
+  track('Silence', 'CDM Project', '50 Best of Chill & Lounge', null, '/covers/yandex-2236548.jpg', { provider: 'spotify', trackId: '3tnVfk6aPYxO2Eer1l4dZf', yandex: { trackId: '2236548', albumId: '239306' } }),
+  track("Here's To You", 'Hayley Westenra, Ennio Morricone, Roma Sinfonietta', 'Paradiso', 2011, '/covers/yandex-2524382.jpg', { provider: 'spotify', trackId: '3CJSqYhsLNBTz8uGatN8si', yandex: { trackId: '2524382', albumId: '255196' } }),
+  track('Река', 'Хмельная Ворга', 'Талые воды', 2024, '/covers/yandex-133956317.jpg', { provider: 'spotify', trackId: '42uofMmc2zEhI6G2jI0xqH', yandex: { trackId: '133956317', albumId: '34421164' } }),
+  track('Век-волкодав (За гремучую доблесть грядущих веков)', 'Noize MC', 'Сохрани мою речь навсегда', 2021, '/covers/yandex-76204162.jpg', { provider: 'spotify', trackId: '6RLYxku4CJ7jQ65F0lTELL', yandex: { trackId: '76204162', albumId: '13451951' } }),
+  track('Плакун-трава', 'Хмельная Ворга', 'Талые воды', 2024, '/covers/yandex-133956326.jpg', { provider: 'spotify', trackId: '1iLhkLQAslrcyynSEzXNyB', yandex: { trackId: '133956326', albumId: '34421164' } }),
   track('Santana Medley (Type)', 'vibermx', 'Santana Medley (Type)', 2025, '/covers/yandex-145450328.jpg', { provider: 'yandex', trackId: '145450328', albumId: '39345278' }),
-  track('Time And Space', 'Groove Armada', 'White Light', 2010, '/covers/yandex-2191993.jpg', { provider: 'yandex', trackId: '2191993', albumId: '216926' }),
-  track('Гармония', 'Дайте танк (!)', 'Хрупко', 2025, '/covers/yandex-136723109.jpg', { provider: 'yandex', trackId: '136723109', albumId: '35656375' }),
-  track('Новый день', 'Конец фильма', 'Новый день', 2016, '/covers/yandex-29010316.png', { provider: 'yandex', trackId: '29010316', albumId: '3481792' }),
-  track('Как все', 'Би-2', 'Нечётный воин. Лучшее (2005-2015)', 2015, '/covers/yandex-24343732.jpg', { provider: 'yandex', trackId: '24343732', albumId: '2835125' }),
-  track('Знаю! Будет!', '7Б', 'Молодые ветра. Переиздание', 2002, '/covers/yandex-28123442.jpg', { provider: 'yandex', trackId: '28123442', albumId: '3359372' }),
-  track('Не чувствую', 'Рубеж Веков', 'Альбом с картинками', 2021, '/covers/yandex-119696093.jpg', { provider: 'yandex', trackId: '119696093', albumId: '28399303' }),
-  track('Причины для радости', 'Noize MC', 'Не все дома', 2025, '/covers/yandex-137292078.jpg', { provider: 'yandex', trackId: '137292078', albumId: '35858220' }),
+  track('Time And Space', 'Groove Armada', 'White Light', 2010, '/covers/yandex-2191993.jpg', { provider: 'spotify', trackId: '3xvEOT1K0MX225Yz7uuPIv', yandex: { trackId: '2191993', albumId: '216926' } }),
+  track('Гармония', 'Дайте танк (!)', 'Хрупко', 2025, '/covers/yandex-136723109.jpg', { provider: 'spotify', trackId: '5nZvp3WWTztRHDm7IJEmWg', yandex: { trackId: '136723109', albumId: '35656375' } }),
+  track('Новый день', 'Конец фильма', 'Новый день', 2016, '/covers/yandex-29010316.png', { provider: 'spotify', trackId: '12lsLpaTiQo9KnwkwyQDys', yandex: { trackId: '29010316', albumId: '3481792' } }),
+  track('Как все', 'Би-2', 'Нечётный воин. Лучшее (2005-2015)', 2015, '/covers/yandex-24343732.jpg', { provider: 'spotify', trackId: '7osqQdrrFqcM6p38tuSvic', yandex: { trackId: '24343732', albumId: '2835125' } }),
+  track('Знаю! Будет!', '7Б', 'Молодые ветра. Переиздание', 2002, '/covers/yandex-28123442.jpg', { provider: 'spotify', trackId: '1Hgw0fZdaoU6IkFsfqbOoW', yandex: { trackId: '28123442', albumId: '3359372' } }),
+  track('Не чувствую', 'Рубеж Веков', 'Альбом с картинками', 2021, '/covers/yandex-119696093.jpg', { provider: 'spotify', trackId: '1mdnI7qNdAhl6Rs1MIojKX', yandex: { trackId: '119696093', albumId: '28399303' } }),
+  track('Причины для радости', 'Noize MC', 'Не все дома', 2025, '/covers/yandex-137292078.jpg', { provider: 'spotify', trackId: '2Fkxq5V5l0Ek4iUxEXRifZ', yandex: { trackId: '137292078', albumId: '35858220' } }),
 ]
 
 /** Цитаты персонажа. Кавычки-ёлочки вокруг текста ставит вёрстка, в данных их нет. */

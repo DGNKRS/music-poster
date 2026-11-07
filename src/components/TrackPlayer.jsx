@@ -84,7 +84,7 @@ function SpotifyPlayer({ source, autoplay, onReady, onEnded }) {
  * Встроенный плеер сервиса. Звук останавливается вместе с размонтированием,
  * поэтому в один момент играет только открытый трек.
  */
-export default function TrackPlayer({ track, autoplay, onReady, onEnded }) {
-  const Player = track.source.provider === 'spotify' ? SpotifyPlayer : YandexPlayer
-  return <Player source={track.source} title={track.title} autoplay={autoplay} onReady={onReady} onEnded={onEnded} />
+export default function TrackPlayer({ track, source = track.source, autoplay, onReady, onEnded }) {
+  const Player = source.provider === 'spotify' ? SpotifyPlayer : YandexPlayer
+  return <Player source={source} title={track.title} autoplay={autoplay} onReady={onReady} onEnded={onEnded} />
 }
